@@ -1,21 +1,26 @@
 cask "mantissa" do
-  arch arm: "arm64", intel: "x64"
-
   version "0.1.0"
-  sha256 arm:   "SHA_FROM_MACOS_ARM64_TXT",
-         intel: "SHA_FROM_MACOS_X64_TXT"
+  sha256 "54e4f34970f3f97ed6922a31d500592c39aaca68dc9a1f0081fa0d40d11a8e39"
 
-  url "https://github.com/mreza-n/mantissa-releases/releases/download/v#{version}/Mantissa-#{version}-macos-#{arch}.zip"
+  url "https://github.com/mreza-n/mantissa-releases/releases/download/v#{version}/Mantissa-#{version}-macos-arm64.zip"
   name "Mantissa"
   desc "Fixed-point DSP debugger and wave-compare tool"
   homepage "https://mantissadsp.com"
 
+  # Apple Silicon only. ``release.yml``'s ``macos-latest`` runner is arm64
+  # and that's the single artifact we publish today. ``depends_on arch``
+  # makes brew refuse the install on Intel Macs with a clear error rather
+  # than serve them a binary they can't run.
+  depends_on arch: :arm64
+
   app "Mantissa.app"
 
-  # Brew strips the com.apple.quarantine attribute on cask installs
-  # automatically — this is what makes the Gatekeeper warning go away
-  # for cask users even on an ad-hoc-signed build. Nothing extra to do here.
+  # Optional CLI shim so users can launch from a terminal with ``mantissa``.
+  # Comment this out to keep the cask GUI-only.
+  binary "#{appdir}/Mantissa.app/Contents/MacOS/Mantissa", target: "mantissa"
 
+  # Removed by ``brew uninstall --cask --zap mantissa``. Keep in sync with
+  # whatever paths the app actually writes (settings, caches, logs).
   zap trash: [
     "~/Library/Application Support/Mantissa",
     "~/Library/Preferences/com.mantissa.*.plist",
