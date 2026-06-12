@@ -1,6 +1,6 @@
 cask "mantissa" do
   version "0.1.0"
-  sha256 "54e4f34970f3f97ed6922a31d500592c39aaca68dc9a1f0081fa0d40d11a8e39"
+  sha256 "3ce11841f3077e5260c9b27ba10bb2e37d830f517a8f39e92dddf774317c081c"
 
   url "https://github.com/mreza-n/mantissa-releases/releases/download/v#{version}/Mantissa-#{version}-macos-arm64.zip"
   name "Mantissa"

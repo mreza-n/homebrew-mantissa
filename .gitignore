@@ -1,0 +1,14 @@
+# IDE / editor metadata — local-only state, not part of the cask.
+.idea/
+.vscode/
+*.iml
+
+# OS noise
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor swap / backup files
+*.swp
+*.swo
+*~
